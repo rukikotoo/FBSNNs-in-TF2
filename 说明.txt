@@ -1,0 +1,18 @@
+在迁移到tf2之前。我们先对源代码进行复现。
+
+import tensorflow._api.v2.compat.v1 as tf
+tf.disable_v2_behavior()
+以上是最简单的迁移到tf2的方案。
+
+
+tensorflow 2.9.0 ！！！！！！！！！！！！这一点试了很久
+Python	3.10.x	实测3.12可能出现问题
+CUDA	11.2	不适用此版本很可能出现问题
+cuDNN	8.1.0	官方推荐版本（实测8.9.7也可行）
+numpy	1.26.4	最新支持numpy<2的版本
+
+cpu大概是1.几秒一轮，GPU是0.几秒，似乎没快多少。。。
+It: 19990, Loss: 1.236e+01, Y0: 77.050, Time: 0.74, Learning Rate: 1.000e-06
+考虑时间因素，原文使用学习率衰减的策略训练了10万轮。我只训练了2万轮，中间调整了一次学习率，毕竟边际收益递减，后面的训练对loss的下降的贡献不大。
+
+FBSNNS.py中预留了phi_tf，g_tf，mu_tf，sigma_tf四类抽象方法。在具体的任务中带入即可，在BSB期权公式中
