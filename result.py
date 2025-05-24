@@ -60,12 +60,26 @@ def u_exact(t, X):
     
 Y_test = np.reshape(u_exact(np.reshape(t_test[0:M,:,:],[-1,1]), 
                               np.reshape(X_pred[0:M,:,:],[-1,D])),[M,-1,1])
-print("权重示例（第一层）：", sess.run(model.weights[0][0, :5]))  # 打印第一层前5个权重
-t_test, W_test = model.fetch_minibatch()
-print("t_test 范围：", np.min(t_test), np.max(t_test))  # 应为 [0.0, T]
-print("W_test 均值：", np.mean(W_test))                 # 应接近 0，但方差为 dt
-# 打印预测值，确认不再是0
-print("Y_pred 示例值:", Y_pred[0, 0:5, 0]) 
+# =================================================================
+#               在此处添加下面的打印代码块
+# =================================================================
+
+### 7. 检查并打印初始值 (t=0) ###
+# 我们检查第一条样本路径的第一个时间点的值
+Y_test_0 = Y_test[0, 0, 0]
+Y_pred_0 = Y_pred[0, 0, 0]
+initial_error = np.abs(Y_pred_0 - Y_test_0)
+relative_error = initial_error / Y_test_0 * 100
+
+print("\n" + "="*50)
+print("      检验初始点 t=0 的预测值与真实值")
+print("="*50)
+print(f"真实值 Y_test[0, 0, 0]:   {Y_test_0:.5f}")
+print(f"预测值 Y_pred[0, 0, 0]:   {Y_pred_0:.5f}")
+print("-" * 50)
+print(f"绝对误差 |Y_pred - Y_test|: {initial_error:.5f}")
+print(f"相对误差 (%):             {relative_error:.4f}%")
+print("="*50 + "\n")
 # 6. 绘制结果图
 samples = 5
 plt.figure(figsize=(10,6))
