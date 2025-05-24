@@ -50,6 +50,12 @@ BSB_Apr18_50.pdf & BSB_Apr18_50_errors.pdf: 原文的结果
 
 从结果图可以看出，尽管我的训练轮数远少于原文，但最终的预测误差非常接近，甚至略优。在误差图中，红色虚线代表 “均值 + 两个标准差”，可以将其理解为误差的置信区间上界。
 
+## 用Tensorflow2重构
+
+采取同样的训练方式，训练两万轮。后缀有_tf2的文件就是重构的版本。figure_tf2里面是图片，model_tf2中是模型。
+tf2和tf1最大的差别是使用动态图而不是静态图。原文使用不同的学习率进行多次训练，定义了多个优化器，这在tf1中是可以的，但是在tf2中要改过来。
+主要的改动是用 TensorFlow 2 的 Eager Execution 和 tf.function 替代 tf.placeholder 和 tf.Session。还有语法上的一些细微之处，比如生成对角矩阵的tf.matrix_diag改为tf.linalg.diag。使用 tf.keras.optimizers.Adam 和 tf.train.Checkpoint 来替代旧的 tf.train.AdamOptimizer 和 tf.train.Saver。
+
 
 
 
