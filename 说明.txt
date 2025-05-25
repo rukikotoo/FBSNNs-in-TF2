@@ -16,3 +16,5 @@ It: 19990, Loss: 1.236e+01, Y0: 77.050, Time: 0.74, Learning Rate: 1.000e-06
 考虑时间因素，原文使用学习率衰减的策略训练了10万轮。我只训练了2万轮，中间调整了一次学习率，毕竟边际收益递减，后面的训练对loss的下降的贡献不大。
 
 FBSNNS.py中预留了phi_tf，g_tf，mu_tf，sigma_tf四类抽象方法。在具体的任务中带入即可，在BSB期权公式中
+
+deepBSDE中每一层网络的参数是独立的，NonsharedModel done this。但是FBSNN不是。
