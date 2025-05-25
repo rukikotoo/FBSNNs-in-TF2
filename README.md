@@ -1,4 +1,4 @@
-﻿# [FBSNNs]((https://github.com/maziarraissi/FBSNNs))-in-TF2
+﻿# [FBSNNs](https://github.com/maziarraissi/FBSNNs)-in-TF2
 在用tf2重写项目之前，我先基于tf1跑通项目，理解内在逻辑。tf2是兼容tf1的，只需要改为
 ```python
 import tensorflow._api.v2.compat.v1 as tf
@@ -56,7 +56,7 @@ BSB_Apr18_50.pdf & BSB_Apr18_50_errors.pdf: 原文的结果
 tf2和tf1最大的差别是使用动态图而不是静态图。原文使用不同的学习率进行多次训练，定义了多个优化器，这在tf1中是可以的，但是在tf2中要改过来。
 主要的改动是用 TensorFlow 2 的 Eager Execution 和 tf.function 替代 tf.placeholder 和 tf.Session。还有语法上的一些细微之处，比如生成对角矩阵的tf.matrix_diag改为tf.linalg.diag。使用 tf.keras.optimizers.Adam 和 tf.train.Checkpoint 来替代旧的 tf.train.AdamOptimizer 和 tf.train.Saver。使用来自tf.keras的新api
 
-参照[DeepBSDE]([https://markdown.com.cn](https://github.com/frankhan91/DeepBSDE))的结构。进一步将网络结构和求解器解耦。只需要在FBSNN_Model这一个class里面调整就能改变网络结构。FBSNN_Model会被FBSNN_Solver继承，添加关于训练的方法用于进一步的计算。
+参照[DeepBSDE](https://github.com/frankhan91/DeepBSDE)的结构。进一步将网络结构和求解器解耦。只需要在FBSNN_Model这一个class里面调整就能改变网络结构。FBSNN_Model会被FBSNN_Solver继承，添加关于训练的方法用于进一步的计算。
 以及train部分和model也进行了解耦，equation.py中有BSB，HJB，AC的模型（如果需要可以增加更多）。HJB方程和AC方程的模型参数和图片位于后缀为_AC和_HJB的对应文件夹中。其中HJB方程的拟合效果相对没那么好，可能是因为训练轮数比较少。
 
 
